@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZapFind</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./images/favicon.webp">
+  
+
+</head>
+<body>
+    <div class="overflow-x-hidden p-0 m-0">
+        <!-- navbar -->
+        <nav class="bg-[rgb(168,237,77)]">
+            <div class="flex flex-row justify-between items-center mx-auto w-full max-w-[90%] py-4">
+                <p class="font-bold text-[24px] text-shadow-md font-[Cabin]">ZapFind</p>
+                <div class="flex gap-8 items-center flex-wrap">
+                    <a href="#" class="hover:underline text-[18px]">Home</a>
+                    <a href="about.html" class="hover:underline text-[18px]">About</a>
+                    <a href="support.html" class="hover:underline text-[18px]">Support</a>
+                    <span id="userEmail" class="text-[18px] truncate max-w-[200px] overflow-hidden">user@example.com</span>
+                    <a href="#" onclick="logoutUser()" class="hover:underline text-[18px]">Logout</a>
+                </div>
+            </div>
+        </nav>
+        
+            <!-- hero section  -->
+             
+         <section class="bg-gradient-to-r from-[#f4f9ef] to-[#c9f0aa]  w-full h-full">
+            <div class="max-w-[82%] mx-auto">
+                <div class="text-center ">
+                    <h2 class="font-[Cabin] text-[36px] font-[900] text-center left-[12rem] py-1">Ready, Set, Recharge</h2>
+                    <p class="text-[24px] mt-2 pb-8">Lets navigate to your nearest charging station!</p>
+                    
+                    <form class="w-[500px] mx-auto" action="map.html" method="get">
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input
+                                type="search"
+                                id="default-search"
+                                name="city"
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Enter your location"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                    
+        
+                </div>
+                <div class="bg-cover bg-center relative top-[18px] left-[17em] pb-4" style="background-image: url(./images/main3.png); height: 40em; width: 65%;"></div>
+            </div>
+            
+                  </section>
+        
+                  <!-- cards -->
+                  <section class="bg-gradient-to-r from-[#f4f9ef] to-[#c9f0aa]">
+                <div class="max-w-[82%] mx-auto py-6">
+                    <div class="flex flex-row justify-around items-center">
+                        <!-- card1 -->
+                         <div class="flex flex-col rounded-lg border-2 w-[27%] h-[28em] hover:scale-110 transition-transform duration-200 ease-in-out shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]">
+                            <img src="./images/c1.jpg" alt="" 
+                            loading="lazy" width="full" height="50px"
+                            class="rounded-lg">
+                            <hr>
+                            <a href="#" class="text-[30px] font-[450]">Find Nearby<br> Sations</a>
+                
+                         </div>
+                          <!-- card2 -->
+                          <div class="flex flex-col rounded-lg border-2 w-[27%] h-[28em] hover:scale-110 transition-transform duration-200 ease-in-out shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]">
+                            <img src="./images/c2ff.jpg" alt="" 
+                            loading="lazy" width="full" height="50px"
+                            class="rounded-lg">
+                            <hr>
+                            <a href="#" class="text-[30px] font-[450]">Real-time <br> Availability</a>
+                
+                         </div>
+                          <!-- card3 -->
+                          <div class="flex flex-col rounded-lg border-2 w-[27%] h-[28em] hover:scale-110 transition-transform duration-200 ease-in-out shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]">
+                            <img src="./images/c3.jpeg" alt="" 
+                            loading="lazy" width="full" height="200px"
+                            class="rounded-lg">
+                            <hr>
+                            <a href="slots.html" class="text-[30px] font-[450]">Book Charging <br>Slots</a>
+                
+                         </div>
+                         
+                        </div>
+                </div>
+                  </section>
+              
+                 <!-- heroection2 -->
+                  
+                 <section class="py-8 bg-gradient-to-r from-[#f4f9ef] to-[#c9f0aa]">
+                    <div class="max-w-[82%] mx-auto">
+                        <!-- idea1 -->
+                        <div class="flex relative flex-row gap-6 ">
+                            <div >    
+                            <img class="h-auto max-w-lg transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0 hover:scale-105 shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]" 
+                            src="./images/moderncharge.jpg" alt="image description">
+                            </div>
+                            <div class="flex flex-col">
+                                <h3 class="font-[Cabin] text-[28px] font-[700] text-[rgb(60,73,189)]">Charge Up, Drive On: Find EV Charging Stations Effortlessly with ZapFind.</h3>
+                                <p class="text-[20px text-gray-100] leading-[1.8] py-3">A seamless journey starts here. With ZapFind, locating EV charging stations is as simple as a tap. Designed for the modern driver, our intuitive interface blends sleek visuals with cutting-edge technology, ensuring you can find charging points quickly and stay on the move. Experience the future of EV travel—minimal, efficient, and built for you.</p>
+                            </div>
+                        </div>
+        
+                        <!-- idea2 -->
+                        <div class="flex relative flex-row gap-6 py-8">
+                            <div >    
+                            <img class="h-auto max-w-lg transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0 hover:scale-105 shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]" 
+                            src="./images/map1.jpg" alt="image description">
+                            </div>
+                            <div class="flex flex-col">
+                                <h3 class="font-[Cabin] text-[28px] font-[700] text-[rgb(60,73,189)]">Your EV Journey Made Simple: Discover Nearby Charging Points in Seconds.</h3>
+                                <p class="text-[20px text-gray-100] leading-[1.8] py-3">Navigate with confidence using ZapFind's interactive map. Our advanced locator highlights the nearest charging stations tailored to your route, making it easy to plan your journey. With real-time updates and precise directions, ZapFind ensures you're always within reach of a reliable charger—keeping your travels smooth and worry-free.</p>
+                            </div>
+                        </div>
+        
+                         <!-- idea3 -->
+                         <div class="flex relative flex-row gap-6 py-8 ">
+                            <div >    
+                            <img class="h-auto max-w-lg transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0 hover:scale-105 shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]" 
+                            src="./images/greenev.jpg" alt="image description">
+                            </div>
+                            <div class="flex flex-col">
+                                <h3 class="font-[Cabin] text-[28px] font-[700] text-[rgb(60,73,189)]">Drive Green, Charge Clean: Your Gateway to Sustainable EV Travel</h3>
+                                <p class="text-[20px text-gray-100] leading-[1.8] py-3">Join the movement toward a cleaner, greener future with ZapFind. By connecting EV drivers to eco-friendly charging stations, we’re making sustainable travel more accessible than ever. With every charge, you’re contributing to a healthier planet—because your journey isn’t just about reaching your destination; it’s about protecting the world we share.
+        
+                                </p>
+                            </div>
+                        </div>
+        
+                         <!-- idea4 -->
+                         <div class="flex relative flex-row gap-6 py-8">
+                            <div >    
+                            <img class="h-auto max-w-lg transition-all duration-300 rounded-lg cursor-pointer filter grayscale hover:grayscale-0 hover:scale-105 shadow-[0px_11px_19px_0px_rgba(0,_0,_0,_0.1)]" 
+                            src="./images/stressev.jpg" alt="image description">
+                            </div>
+                            <div class="flex flex-col">
+                                <h3 class="font-[Cabin] text-[28px] font-[700] text-[rgb(60,73,189)]">Worried About Charging? ZapFind Has You Covered!</h3>
+                                <p class="text-[20px text-gray-100] leading-[1.8] py-3">Say goodbye to range anxiety with ZapFind, your trusted EV travel companion. Whether you're in the city or on a long road trip, our platform ensures you never run out of power by finding the most reliable charging stations nearby. With ZapFind, you can stay focused on the journey while we handle the charging hassle.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                 </section>
+        
+                 <!-- footer -->
+                 <footer class="bg-[#a8ed4d] text-gray-800 py-6">
+                    <div class="max-w-[82%] mx-auto flex flex-col md:flex-row justify-between items-center">
+                        <!-- Left Section -->
+                        <div class="text-center md:text-left">
+                            <p class="font-[Cabin] font-bold text-[20px]">ZapFind</p>
+                            <p class="text-sm">Powering your EV journeys effortlessly.</p>
+                        </div>
+                
+                        <!-- Middle Section -->
+                        <div class="text-center py-4 md:py-0">
+                            <p class="text-sm">© 2025 ZapFind. All rights reserved.</p>
+                        </div>
+                
+                        <!-- Right Section -->
+                        <div class="flex gap-4">
+                            <a href="#" class="text-gray-800 hover:text-gray-600 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
+                                    <path d="M22.675 0h-21.35c-.742 0-1.325.583-1.325 1.326v21.348c0 .743.583 1.326 1.325 1.326h21.351c.742 0 1.325-.583 1.325-1.326v-21.348c0-.743-.583-1.326-1.325-1.326zm-13.363 20.671h-3.533v-9.536h3.533v9.536zm-1.768-10.919c-1.132 0-2.052-.919-2.052-2.052s.919-2.052 2.052-2.052c1.133 0 2.052.919 2.052 2.052s-.919 2.052-2.052 2.052zm13.535 10.919h-3.533v-4.869c0-1.16-.023-2.648-1.617-2.648-1.617 0-1.865 1.263-1.865 2.569v4.948h-3.533v-9.536h3.391v1.302h.047c.472-.896 1.627-1.841 3.35-1.841 3.581 0 4.246 2.36 4.246 5.426v5.649z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="text-gray-800 hover:text-gray-600 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
+                                    <path d="M24 4.557c-.883.392-1.833.656-2.828.775 1.017-.608 1.798-1.57 2.165-2.723-.95.564-2.005.974-3.127 1.194-.897-.957-2.173-1.555-3.591-1.555-2.717 0-4.924 2.207-4.924 4.923 0 .386.044.762.128 1.124-4.092-.205-7.719-2.165-10.149-5.144-.424.729-.666 1.574-.666 2.475 0 1.708.87 3.217 2.19 4.102-.807-.026-1.566-.247-2.229-.616v.062c0 2.388 1.697 4.382 3.946 4.832-.413.113-.847.173-1.294.173-.316 0-.626-.03-.929-.086.627 1.956 2.445 3.379 4.6 3.421-1.685 1.32-3.809 2.107-6.115 2.107-.397 0-.788-.023-1.175-.068 2.179 1.396 4.768 2.211 7.548 2.211 9.054 0 14-7.496 14-13.986 0-.213-.005-.425-.014-.636.961-.693 1.797-1.56 2.457-2.548l-.047-.02z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="text-gray-800 hover:text-gray-600 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.31 3.608 1.285.974.975 1.222 2.242 1.285 3.608.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.062 1.366-.31 2.633-1.285 3.608-.975.974-2.242 1.222-3.608 1.285-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.366-.062-2.633-.31-3.608-1.285-.975-.975-1.222-2.242-1.285-3.608-.058-1.265-.07-1.645-.07-4.849s.012-3.584.07-4.849c.062-1.366.31-2.633 1.285-3.608.975-.975 2.242-1.222 3.608-1.285 1.265-.058 1.645-.07 4.849-.07zm0-2.163c-3.259 0-3.667.012-4.947.07-1.276.058-2.613.333-3.795 1.515s-1.457 2.519-1.515 3.795c-.058 1.281-.07 1.688-.07 4.947s.012 3.667.07 4.947c.058 1.276.333 2.613 1.515 3.795s2.519 1.457 3.795 1.515c1.281.058 1.688.07 4.947.07s3.667-.012 4.947-.07c1.276-.058 2.613-.333 3.795-1.515s1.457-2.519 1.515-3.795c.058-1.281.07-1.688.07-4.947s-.012-3.667-.07-4.947c-.058-1.276-.333-2.613-1.515-3.795s-2.519-1.457-3.795-1.515c-1.281-.058-1.688-.07-4.947-.07zm0 5.838c-3.384 0-6.142 2.758-6.142 6.142s2.758 6.142 6.142 6.142 6.142-2.758 6.142-6.142-2.758-6.142-6.142-6.142zm0 10.113c-2.188 0-3.971-1.783-3.971-3.971s1.783-3.971 3.971-3.971 3.971 1.783 3.971 3.971-1.783 3.971-3.971 3.971zm6.406-11.845c-.796 0-1.44.644-1.44 1.44s.644 1.44 1.44 1.44 1.44-.644 1.44-1.44-.644-1.44-1.44-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+                
+            </div>
+        
+    </div>
+      <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    async function initFirebase() {
+        try {
+            // Fetch Firebase config securely from backend
+            const res = await fetch('http://localhost:4000/firebase-config');
+            const firebaseConfig = await res.json();
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            // Auth check
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = "index.html";
+                } else {
+                    const userEmailElement = document.getElementById("userEmail");
+                    if (userEmailElement) {
+                        userEmailElement.textContent = user.email;
+                    }
+                }
+            });
+
+            // Expose logout function globally
+            window.logoutUser = function () {
+                signOut(auth)
+                    .then(() => {
+                        window.location.href = "index.html";
+                    })
+                    .catch((error) => {
+                        console.error("Logout error:", error);
+                    });
+            };
+
+        } catch (err) {
+            console.error("Error initializing Firebase:", err);
+            alert("Failed to initialize Firebase.");
+        }
+    }
+
+    initFirebase();
+</script>
+</body>
+</html>

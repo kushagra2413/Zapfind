@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Charging Slot - ZapFind</title>
+    <link rel="icon" type="image/png" href="./images/favicon.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Added SweetAlert2 for better notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    async function initFirebase() {
+        try {
+            // Fetch config from your server
+            const res = await fetch('/firebase-config');
+            const firebaseConfig = await res.json();
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            // Run auth state logic after page loads
+            window.onload = function () {
+                onAuthStateChanged(auth, (user) => {
+                    const loginNav = document.getElementById("loginNav");
+                    if (user) {
+                        loginNav.innerHTML = `<button onclick="logoutUser()" class="hover:underline text-[18px]">Logout</button>`;
+                        const emailField = document.getElementById("email");
+                        if (emailField) {
+                            emailField.value = user.email;
+                        }
+                    } else {
+                        window.location.href = "login.html";
+                    }
+                });
+            };
+
+            // Expose logout function globally
+            window.logoutUser = function () {
+                signOut(auth).then(() => {
+                    Swal.fire('Logged Out', 'You have been logged out successfully!', 'success')
+                        .then(() => window.location.href = "index.html");
+                }).catch((error) => {
+                    Swal.fire('Error', 'Failed to logout. Please try again.', 'error');
+                });
+            };
+
+        } catch (err) {
+            console.error("Error loading Firebase config:", err);
+            alert("Something went wrong while initializing authentication.");
+        }
+    }
+
+    initFirebase();
+</script>
+
+   <style>
+    .time-slot {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    .time-slot.selected {
+        background-color: #a8ed4d;
+        transform: scale(1.05);
+        border-color: #86c53d;
+    }
+    .time-slot.booked {
+        background-color: #ff4d4d;  /* Changed to red */
+        color: white;  /* Added white text for better contrast */
+        cursor: not-allowed;
+        opacity: 0.8;  /* Slightly increased opacity */
+        border-color: #cc0000;  /* Added red border */
+    }
+    .time-slot:not(.booked):hover {
+        background-color: #f0f9e8;
+        transform: scale(1.02);
+    }
+    /* Added new style for booked slot hover */
+    .time-slot.booked:hover {
+        opacity: 0.9;  /* Slight opacity change on hover */
+    }
+</style>
+</head>
+<body class="bg-gradient-to-r from-[#f4f9ef] to-[#c9f0aa] min-h-screen">
+    <nav class="bg-[rgb(168,237,77)]">
+        <div class="flex flex-row justify-center items-center relative mx-auto w-[1080px] py-4">
+            <p class="absolute -left-9 font-bold text-[24px]">ZapFind</p>
+            <div class="flex gap-8 ml-[55rem]">
+                <a href="home.html" class="hover:underline text-[18px]">Home</a>
+                <span id="loginNav">
+                    <a href="login.html" class="hover:underline text-[18px]">Login</a>
+                </span>
+                <a href="about.html" class="hover:underline text-[18px]">About</a>
+                <a href="support.html" class="hover:underline text-[18px]">Support</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4" id="stationName"></h1>
+        
+        <div class="bg-white p-4 rounded shadow mb-4">
+            <h2 class="text-xl font-semibold" id="currentDate"></h2>
+            <p class="text-gray-600" id="currentTime"></p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-bold mb-4">Available Time Slots</h2>
+                <div id="timeSlots" class="grid grid-cols-3 gap-2"></div>
+            </div>
+
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-bold mb-4">Booking Details</h2>
+                <form id="bookingForm" class="space-y-4">
+                    <div>
+                        <label class="block mb-1">Name</label>
+                        <input type="text" name="userName" required class="w-full p-2 border rounded">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full p-2 border rounded" readonly>
+                    </div>
+                    <div>
+                        <label class="block mb-1">Phone</label>
+                        <input type="tel" name="phone" required class="w-full p-2 border rounded" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Vehicle Number</label>
+                        <input type="text" name="vehicleNumber" required class="w-full p-2 border rounded">
+                    </div>
+                    <div>
+                        <label class="block mb-1">Vehicle Type</label>
+                        <select name="vehicleType" required class="w-full p-2 border rounded">
+                            <option value="car">Car</option>
+                            <option value="bike">Bike</option>
+                            <option value="scooter">Scooter</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-[#a8ed4d] text-black py-2 px-4 rounded hover:bg-opacity-90 transition duration-300">
+                        Book Slot
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let selectedSlot = null;
+    
+        const urlParams = new URLSearchParams(window.location.search);
+        const stationId = urlParams.get('stationId');
+        const stationName = urlParams.get('stationName');
+
+        document.getElementById('stationName').textContent = decodeURIComponent(stationName);
+    
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toDateString();
+            document.getElementById('currentTime').textContent = `Current Time: ${now.toLocaleTimeString()}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    
+        async function fetchSlots() {
+            try {
+                const now = new Date();
+                const date = now.toISOString().split('T')[0];
+                console.log('Fetching slots for station:', stationId, 'on date:', date);
+console.log('API URL:', `${API_URL}/slots/${stationId}?date=${date}`);
+
+                const response = await fetch(`${API_URL}/slots/${stationId}?date=${date}`);
+                if (!response.ok) throw new Error('Failed to fetch slots');
+                const slots = await response.json();
+                displaySlots(slots);
+            } catch (error) {
+                console.error('Error fetching slots:', error);
+                Swal.fire('Error', 'Failed to fetch available slots. Please try again.', 'error');
+            }
+        }
+    
+        function displaySlots(slots) {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+    
+            if (slots.length === 0) {
+                container.innerHTML = '<p class="col-span-3 text-center text-gray-600">No slots available for this date.</p>';
+                return;
+            }
+    
+            slots.forEach(slot => {
+                const div = document.createElement('div');
+                div.className = `time-slot ${slot.isAvailable ? '' : 'booked'}`;
+                div.textContent = new Date(slot.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+                if (slot.isAvailable) {
+                    div.onclick = () => {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        div.classList.add('selected');
+                        selectedSlot = slot;
+                    };
+                } else {
+                    div.title = 'This slot is already booked';
+                }
+    
+                container.appendChild(div);
+            });
+        }
+    
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            if (!selectedSlot) {
+                Swal.fire('Error', 'Please select a time slot first', 'warning');
+                return;
+            }
+    
+            const formData = new FormData(e.target);
+            const bookingData = {
+                stationId,
+                stationName: decodeURIComponent(stationName),
+                slotTime: selectedSlot.time,
+                userName: formData.get('userName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                vehicleNumber: formData.get('vehicleNumber'),
+                vehicleType: formData.get('vehicleType')
+            };
+    
+            try {
+                const response = await fetch(`${API_URL}/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+    
+                const result = await response.json();
+    
+                if (!response.ok) {
+                    if (response.status === 409) {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Slot Already Booked',
+                            text: 'Sorry, this slot was just booked by someone else. Please select another slot.',
+                            confirmButtonText: 'Select Another Slot'
+                        });
+                        fetchSlots(); // Refresh slots
+                        return;
+                    }
+                    throw new Error(result.error || 'Failed to create booking');
+                }
+    
+                const successResult = await Swal.fire({
+                    icon: 'success',
+                    title: 'Booking Successful!',
+                    text: result.message,
+                    showCancelButton: true,
+                    confirmButtonText: 'Return to Home',
+                    cancelButtonText: 'Book Another Slot'
+                });
+    
+                if (successResult.isConfirmed) {
+                    window.location.href = 'home.html'; // Changed from home.html to index.html
+                } else {
+                    // Enhanced reset logic
+                    const currentEmail = document.getElementById('email').value; // Store current email
+                    e.target.reset(); // Reset form
+                    document.getElementById('email').value = currentEmail; // Restore email
+                    selectedSlot = null; // Clear selected slot
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected')); // Clear slot selection
+                    fetchSlots(); // Refresh available slots
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                Swal.fire('Error', error.message || 'Failed to create booking. Please try again.', 'error');
+            }
+        });
+    
+        // Initial fetch
+        fetchSlots();
+    </script>
+</body>
+</html>

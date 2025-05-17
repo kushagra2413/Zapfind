@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ZapFind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./images/favicon.webp">
+  
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Cabin', sans-serif;
+        }
+
+        .login-background {
+            position: relative;
+            background-image: 
+                linear-gradient(rgba(168, 237, 77, 0.7), rgba(201, 240, 170, 0.7)),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 1600 900'%3E%3Cpath fill='%23a8ed4d' d='M0 0h1600v900H0z'/%3E%3Cg fill='none' stroke='%23007bff' stroke-width='2' stroke-opacity='0.1'%3E%3Cpath d='M1122.5 750c0-261.4-212.1-473.5-473.5-473.5S175.5 488.6 175.5 750m846-475c-195.3-195.3-511.5-195.3-706.8 0-195.3 195.3-195.3 511.5 0 706.8m707-707c-261.4 0-473.5 212.1-473.5 473.5S650.6 1223.5 912 1223.5'/%3E%3C/g%3E%3Cg fill='none' stroke='%23007bff' stroke-width='2' stroke-opacity='0.05'%3E%3Cpath d='M1411.4 750c0-364.6-295.8-660.4-660.4-660.4S90.6 385.4 90.6 750m1231.2-661.4c-271.9-271.9-712.5-271.9-984.4 0-271.9 271.9-271.9 712.5 0 984.4m984.4-985.4c-364.6 0-660.4 295.8-660.4 660.4S1046.4 1410.4 1411.4 1410.4'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-input {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .login-input input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-input input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #a8ed4d, #007bff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .login-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        .login-footer a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: #a8ed4d;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-background">
+        <div class="login-container">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-[rgb(60,73,189)] mb-2">ZapFind Login</h2>
+                <p class="text-gray-600">Power up your EV journey</p>
+            </div>
+
+            <form id="loginForm" onsubmit="loginUser(event)">
+                <div class="login-input">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Enter your email"
+                        required 
+                    >
+                </div>
+                <div class="login-input">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter your password"
+                        required 
+                    >
+                </div>
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>
+                    Don't have an account? 
+                    <a href="register.html">Register here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+     <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    async function initFirebaseLogin() {
+  try {
+    // Fetch Firebase config from your backend with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
+    const res = await fetch('http://localhost:4000/firebase-config', {
+      signal: controller.signal,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!res.ok) {
+      throw new Error(`Server responded with status: ${res.status}`);
+    }
+    
+    const contentType = res.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Response is not JSON. Check server configuration.');
+    }
+    
+    const firebaseConfig = await res.json();
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Check if user is already logged in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "home.html";
+      }
+    });
+
+    // Attach login handler
+    window.loginUser = function(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "home.html";
+        })
+        .catch((error) => {
+          alert("Login Failed: " + error.message);
+        });
+    };
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+    if (error.name === 'AbortError') {
+      alert("Request timeout. Backend server may be down.");
+    } else {
+      alert(`Failed to initialize Firebase: ${error.message}`);
+    }
+  }
+}
+
+    initFirebaseLogin();
+</script>
+
+</body>
+</html>
