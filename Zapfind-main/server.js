@@ -7,14 +7,11 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-// Replace this:
-app.use(cors());
-
-// With this:
 app.use(cors({
-  origin: 'http://localhost:5174', // Your frontend URL
+  origin: 'http://localhost:5173', // Your frontend URL
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type', 'Accept']
+  
 }));
 app.use(express.json());
 
