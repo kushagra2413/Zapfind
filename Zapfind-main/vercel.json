@@ -1,28 +1,33 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "./api/index.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
       "src": "/firebase-config",
-      "dest": "/api/index.js"
+      "dest": "/api/firebase-config.js"
     },
     {
-      "src": "/(.*)",
+      "src": "/api/hello",
+      "dest": "/api/hello.js"
+    },
+    {
+      "src": "/api/slots/([^/]+)",
+      "dest": "/api/slots.js?stationId=$1"
+    },
+    {
+      "src": "/api/bookings",
+      "dest": "/api/bookings.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|webp|svg|ico))",
       "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.html)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     }
-  ],
-  "functions": {
-    "api/index.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
