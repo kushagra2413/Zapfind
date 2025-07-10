@@ -199,6 +199,7 @@
             </div>
         
     </div>
+      <script src="config.js"></script>
       <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -206,7 +207,7 @@
     async function initFirebase() {
         try {
             // Fetch Firebase config securely from backend
-            const res = await fetch('http://localhost:4000/firebase-config');
+            const res = await fetch(window.API_CONFIG.getFirebaseConfigURL());
             const firebaseConfig = await res.json();
 
             // Initialize Firebase

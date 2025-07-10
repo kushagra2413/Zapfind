@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "start": "vite"
+    "start": "vite",
+    "build": "vite build",
+    "dev": "vite",
+    "vercel-build": "echo 'Build complete'"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

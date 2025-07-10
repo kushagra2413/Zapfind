@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Added SweetAlert2 for better notifications -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="config.js"></script>
    <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -15,7 +16,7 @@
     async function initFirebase() {
         try {
             // Fetch config from your server
-            const res = await fetch('/firebase-config');
+            const res = await fetch(window.API_CONFIG.getFirebaseConfigURL());
             const firebaseConfig = await res.json();
 
             // Initialize Firebase
@@ -153,8 +154,8 @@
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
-        const API_URL = 'http://localhost:3000/api';
         let selectedSlot = null;
     
         const urlParams = new URLSearchParams(window.location.search);
@@ -176,9 +177,9 @@
                 const now = new Date();
                 const date = now.toISOString().split('T')[0];
                 console.log('Fetching slots for station:', stationId, 'on date:', date);
-console.log('API URL:', `${API_URL}/slots/${stationId}?date=${date}`);
+console.log('API URL:', `${window.API_CONFIG.getAPIURL()}/slots/${stationId}?date=${date}`);
 
-                const response = await fetch(`${API_URL}/slots/${stationId}?date=${date}`);
+                const response = await fetch(`${window.API_CONFIG.getAPIURL()}/slots/${stationId}?date=${date}`);
                 if (!response.ok) throw new Error('Failed to fetch slots');
                 const slots = await response.json();
                 displaySlots(slots);
@@ -237,7 +238,7 @@ console.log('API URL:', `${API_URL}/slots/${stationId}?date=${date}`);
             };
     
             try {
-                const response = await fetch(`${API_URL}/bookings`, {
+                const response = await fetch(`${window.API_CONFIG.getAPIURL()}/bookings`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
