@@ -6,10 +6,6 @@
       "dest": "/api/firebase-config.js"
     },
     {
-      "src": "/api/hello",
-      "dest": "/api/hello.js"
-    },
-    {
       "src": "/api/slots/([^/]+)",
       "dest": "/api/slots.js?stationId=$1"
     },
